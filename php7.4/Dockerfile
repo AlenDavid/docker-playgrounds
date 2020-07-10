@@ -6,7 +6,7 @@ RUN apt update -y \
     && apt upgrade -y \
     && apt install openssh-server build-essential git curl zsh software-properties-common -y \
     && add-apt-repository ppa:ondrej/php -y \
-    && apt install php7.4 -y
+    && apt install php7.4 php-pear php7.4-curl php7.4-dev php7.4-gd php7.4-mbstring php7.4-zip php7.4-mysql php7.4-xml -y
 
 RUN sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" \
     && chsh -s $(which zsh) \
