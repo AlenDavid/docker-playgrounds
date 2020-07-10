@@ -23,7 +23,7 @@ ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
 # exposed ports
-EXPOSE 22 80 8080 1900-2000 20000-29999
+EXPOSE 22 80 8080
 
 # create workspace dir
 RUN mkdir /workspace
