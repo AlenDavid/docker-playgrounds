@@ -12,7 +12,7 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 # setup ssh
 RUN mkdir /var/run/sshd
 
-RUN echo 'root:123qweasd' | chpasswd
+RUN echo 'root:YOURPASSWORDHERE' | chpasswd
 RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
 # SSH login fix. Otherwise user is kicked off after login

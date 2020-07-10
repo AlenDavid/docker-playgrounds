@@ -4,23 +4,29 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt update -y \
     && apt upgrade -y \
-    && apt install php7.4 openssh-server build-essential git curl -y
+    && apt install openssh-server build-essential git curl zsh software-properties-common -y \
+    && add-apt-repository ppa:ondrej/php -y \
+    && apt install php7.4 -y
+
+RUN sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" \
+    && chsh -s $(which zsh) \
+    && git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
     && php -r "unlink('composer-setup.php');"
 
-# setup ssh
 RUN mkdir /var/run/sshd
+RUN echo 'root:YOURPASSWORDHERE' | chpasswd
 
-RUN echo 'root:123qweasd' | chpasswd
-RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
-
-# SSH login fix. Otherwise user is kicked off after login
-RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
+
+RUN git config --global user.email davidalen51@gmail.com \
+    git config --global user.name "David Alen"
+
 
 # exposed ports
 EXPOSE 22 80 8080
