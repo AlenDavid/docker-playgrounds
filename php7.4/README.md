@@ -1,4 +1,4 @@
-# PHP ^7.4
+# PHP 7.4.^ Playground
 
 This is David Alen's playground for PHP 7.4 Development.
 
