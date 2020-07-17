@@ -24,10 +24,6 @@ RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
-RUN git config --global user.email davidalen51@gmail.com \
-    git config --global user.name "David Alen"
-
-
 # exposed ports
 EXPOSE 22 80 8080
 
